@@ -244,10 +244,11 @@ const games = [
   },
 ];
 
-const main = async () => {
-  await prisma.game.createMany({
+const main = () =>
+  prisma.game.createMany({
     data: games,
   });
-};
 
-main();
+main()
+  .then((data) => console.log(data))
+  .catch((err) => console.log(err));

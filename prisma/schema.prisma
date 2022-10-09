@@ -18,7 +18,7 @@ model User {
   password String
 
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
 
   hunches Hunch[]
 }
@@ -29,7 +29,12 @@ model Game {
   teamB    String
   gameHour DateTime
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   hunches Hunch[]
+
+  @@unique([teamA, teamB, gameHour])
 }
 
 model Hunch {
@@ -43,5 +48,5 @@ model Hunch {
   game Game @relation(fields: [gameId], references: [id])
 
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
 }

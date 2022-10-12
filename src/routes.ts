@@ -1,21 +1,35 @@
 import Router from 'koa-router';
-import { PrismaClient } from '@prisma/client';
+
+import * as games from './controllers/games';
+import * as hunches from './controllers/hunches';
+import * as users from './controllers/users';
 
 export const router = new Router();
-const prisma = new PrismaClient();
 
-const users: Array<{ username: string }> = [];
+/// USERS
+//creating a new user
+router.post('/users', users.createUser);
+//getting all users
+router.get('/users', users.getUsers);
+//updating a user
+router.put('/users', users.updateUser);
+//deleting user
+router.delete('/users', users.deleteUser);
 
-router.get('/users', async (ctx, next) => {
-  ctx.body = users;
-});
+///LOGIN
+//loging into dashboard/profile
+router.get('/login', users.userLogin);
 
-router.post('/users', async (ctx, next) => {
-  const user = {
-    username: `${ctx.request.body?.username}`,
-  };
+/// HUNCHES
+//creating or updating a new hunch
+router.post('/hunches', hunches.createUpdateHunch);
+//getting all hunches
+router.get('/hunches', hunches.getHunches);
+//deleting hunch
+router.delete('/hunches', hunches.deleteHunch);
 
-  users.push(user);
-
-  ctx.body = user;
-});
+/// GAMES
+//getting a game by date
+router.get('/games', games.getGamesByDate);
+//deleting game
+// router.delete('/games', games.deleteGame);

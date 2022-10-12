@@ -1,4 +1,5 @@
 import { app } from './setup';
+import 'dotenv/config';
 
 //listeners
 app.listen(process.env.PORT, () =>

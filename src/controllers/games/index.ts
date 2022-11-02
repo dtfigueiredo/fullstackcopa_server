@@ -1,49 +1,32 @@
-import { PrismaClient } from '@prisma/client';
-import { addDays, formatISO } from 'date-fns';
-import { Context } from 'koa';
+import { PrismaClient } from '@prisma/client'
+import { addDays, formatISO } from 'date-fns'
+import { Context } from 'koa'
 
-const prisma = new PrismaClient();
-//creating game
-// export const createGame = async (ctx: Context) => {
-//   const data: any = {
-//     name: ctx.request.body?.name,
-//     username: ctx.request.body?.username,
-//     email: ctx.request.body?.email,
-//     password: ctx.request.body?.password,
-//   };
-
-//   try {
-//     const game = await prisma.game.create({ data });
-//     ctx.body = game;
-//     ctx.status = 201;
-//   } catch (error) {
-//     ctx.body = error;
-//     ctx.status = 500;
-//   }
-// };
+const prisma = new PrismaClient()
 
 //getting all games or by filtered date
 export const getGamesByDate = async (ctx: Context) => {
-  const currentDate: any = ctx.request.query.gameHour;
+  const filteredGameDate: string = String(ctx.request.query.gameHour)
 
-  //transforming the where parameter into a var, that will filter by date (if exists) or get all the games
-  const where = currentDate
+  //if filteredGameDate exists where = filter ; {}
+  const where = filteredGameDate
     ? {
         gameHour: {
-          gte: currentDate,
-          lt: formatISO(addDays(new Date(currentDate), 1)),
+          gte: filteredGameDate,
+          lt: formatISO(addDays(new Date(filteredGameDate), 1)),
         },
       }
-    : {};
+    : {}
 
   try {
-    const games = await prisma.game.findMany({ where });
-    ctx.body = games;
+    const games = await prisma.game.findMany({ where })
+    ctx.body = games
+    ctx.status = 200
   } catch (error) {
-    ctx.body = error;
-    ctx.status = 500;
+    ctx.body = error
+    ctx.status = 500
   }
-};
+}
 
 //updating game
 // export const updateGame = async (ctx: Context) => {
@@ -71,13 +54,13 @@ export const getGamesByDate = async (ctx: Context) => {
 export const deleteGame = async (ctx: Context) => {
   const data: any = {
     id: ctx.request.body?.id,
-  };
+  }
 
   try {
-    await prisma.game.delete({ where: { id: data.id } });
-    ctx.body = `Jogo: ${data.id} deletado com sucesso.`;
+    await prisma.game.delete({ where: { id: data.id } })
+    ctx.body = `Jogo: ${data.id} deletado com sucesso.`
   } catch (error) {
-    ctx.body = error;
-    ctx.status = 500;
+    ctx.body = error
+    ctx.status = 500
   }
-};
+}

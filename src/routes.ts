@@ -1,35 +1,35 @@
-import Router from 'koa-router';
+import Router from 'koa-router'
 
-import * as games from './controllers/games';
-import * as hunches from './controllers/hunches';
-import * as users from './controllers/users';
+import * as games from './controllers/games'
+import * as hunches from './controllers/hunches'
+import * as users from './controllers/users'
 
-export const router = new Router();
+export const router = new Router()
 
-/// USERS
+/// *USERS
 //creating a new user
-router.post('/users', users.createUser);
+router.post('/users', users.createUser)
 //getting all users
-router.get('/users', users.getUsers);
+router.get('/users', users.getUsers)
 //updating a user
-router.put('/users', users.updateUser);
+router.put('/users', users.updateUser)
 //deleting user
-router.delete('/users', users.deleteUser);
+router.delete('/users', users.deleteUser)
 
-///LOGIN
+/// *LOGIN
 //loging into dashboard/profile
-router.get('/login', users.userLogin);
+router.get('/login', users.userLogin)
 
-/// HUNCHES
+/// *HUNCHES
 //creating or updating a new hunch
-router.post('/hunches', hunches.createUpdateHunch);
+router.post('/hunches', hunches.createUpdateHunch)
 //getting all hunches
-router.get('/hunches', hunches.getHunches);
+router.get('/hunches', hunches.getHunches)
 //deleting hunch
-router.delete('/hunches', hunches.deleteHunch);
+router.delete('/hunches', hunches.deleteHunch)
 
-/// GAMES
+/// *GAMES
 //getting a game by date
-router.get('/games', games.getGamesByDate);
+router.get('/games', games.getGamesByDate)
 //deleting game
 // router.delete('/games', games.deleteGame);
